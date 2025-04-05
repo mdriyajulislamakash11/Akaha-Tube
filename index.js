@@ -79,5 +79,7 @@ const displayDataVideos = (items) => {
 // 3
 
 // 4
+
+// 5
 loadCategories();
 loadVideoData();
