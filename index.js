@@ -81,5 +81,7 @@ const displayDataVideos = (items) => {
 // 4
 
 // 5
+
+// 6
 loadCategories();
 loadVideoData();
