@@ -76,6 +76,6 @@ const displayDataVideos = (items) => {
         card.append(creatCard)
   });
 };
-
+// 3
 loadCategories();
 loadVideoData();
