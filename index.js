@@ -77,5 +77,7 @@ const displayDataVideos = (items) => {
   });
 };
 // 3
+
+// 4
 loadCategories();
 loadVideoData();
