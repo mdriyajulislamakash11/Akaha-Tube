@@ -5,6 +5,35 @@ const loadCategories = () => {
     .catch((err) => console.log(err));
 };
 
+const loadVideoData = () => {
+  fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+    .then((res) => res.json())
+    .then((data) => displayDataVideos(data.videos))
+    .catch((err) => console.log(err));
+};
+
+const removeBtnClass = () => {
+  const buttons = document.getElementsByClassName("category-btn");
+  for(btn of buttons){
+    btn.classList.remove("active")
+  }
+}
+
+const loadCategoriesVideo = (id) => {
+  
+  fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      displayDataVideos(data.category);
+      removeBtnClass();
+
+      const activeBtn = document.getElementById(`btn-${id}`);
+      activeBtn.classList.add("active")
+      console.log(activeBtn)
+    })
+    .catch((err) => console.log(err));
+};
+
 const displayData = (categorie) => {
   const categories = document.getElementById("categoriyes");
 
@@ -12,23 +41,17 @@ const displayData = (categorie) => {
     // console.log(item)
     const button = document.createElement("div");
     button.classList.add(
-      "bg-blue-500",
-      "text-white",
-      "px-4",
-      "py-2",
-      "rounded",
-      "hover:bg-blue-600"
+      // "bg-blue-500",
+      // "text-white",
+      // "px-4",
+      // "py-2",
+      // "rounded",
+      // "hover:bg-blue-600"
     );
-    button.innerHTML = `<button>${item.category}</button>`;
+    button.innerHTML = 
+    `<button id="btn-${item.category_id}" onclick="loadCategoriesVideo(${item.category_id})" class="btn category-btn">${item.category}</button>`;
     categories.append(button);
   });
-};
-
-const loadVideoData = () => {
-  fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
-    .then((res) => res.json())
-    .then((data) => displayDataVideos(data.videos))
-    .catch(err => console.log(err))
 };
 
 // {
@@ -52,11 +75,16 @@ const loadVideoData = () => {
 
 const displayDataVideos = (items) => {
   const card = document.getElementById("videos");
+  card.innerHTML = "";
 
-  console.log(items)
+  if (items.length == 0) {
+    card.innerHTML = "no data found";
+    return;
+  }
+
   items.forEach((item) => {
     const creatCard = document.createElement("div");
-    creatCard.classList.add("card", "w-96", "bg-base-100", "shadow-xl")
+    creatCard.classList.add("card", "w-96", "bg-base-100", "shadow-xl");
     creatCard.innerHTML = `
         
     <figure><img src="${item.thumbnail}" /></figure>
@@ -73,7 +101,7 @@ const displayDataVideos = (items) => {
     </div>
 
         `;
-        card.append(creatCard)
+    card.append(creatCard);
   });
 };
 // 3
